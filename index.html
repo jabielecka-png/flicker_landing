@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page z Glitchem</title>
+    <style>
+        :root {
+            --main-font: sans-serif;
+            --bg-url: url('https://raw.githubusercontent.com/jabielecka-png/flicker_landing/refs/heads/main/Flicker_Kolonia_16x9.jpg');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--main-font);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            background-color: #000;
+        }
+
+        /* BAZOWE TŁO */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: var(--bg-url);
+            background-size: cover;
+            background-position: center;
+            z-index: -3;
+        }
+
+        /* PASKI GLITCHA */
+        .glitch-slice {
+            position: fixed;
+            left: 0;
+            width: 100vw;
+            background-image: var(--bg-url);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* CIEMNA APLA */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            opacity: 0.5;
+            z-index: -1;
+            transition: opacity 0.03s;
+        }
+
+        /* GŁÓWNY KONTENER TREŚCI */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 0px;
+        }
+
+        p {
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+            transition: background 0.3s, color 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0px;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* STYLOWANIE PLAYERKA / AUDIO-BOX */
+        .audio-box {
+            background: rgba(0, 0, 0, 0.3); /* Tutaj zmieniasz tło (np. inny kolor lub przezroczystość) */
+            border: 0px solid rgba(255, 255, 255, 0.5); /* Tutaj zmieniasz ramkę */
+            border-radius: 8px; /* Tutaj zmieniasz zaokrąglenie rogów */
+            padding: 20px; 
+            max-width: 800px; 
+            margin: 0 auto 30px auto; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0); /* Cień pod panelem */
+        }
+
+        .audio-info {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: 0px;
+        }
+
+        .audio-artist {
+            letter-spacing: 0px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .audio-title {
+            font-weight: bold;
+        }
+
+        audio {
+            width: 100%;
+            height: 40px;
+            outline: none;
+            filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.5);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 10px 5px;
+                margin: 35px 35px;
+            }
+            p {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+            }
+            .buttons-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+            .audio-box {
+                padding: 15px 10px;
+            }
+            .audio-info {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="bg-overlay" id="bgOverlay"></div>
+
+    <div class="container">
+        
+        <h1>Tytuł Twojego Projektu</h1>
+        
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+
+        <div class="buttons-wrapper">
+            <a href="#" class="btn" target="_blank">Link Pierwszy</a>
+            <a href="#" class="btn" target="_blank">Link Drugi</a>
+            <a href="#" class="btn" target="_blank">Link Trzeci</a>
+        </div>
+
+        <!-- PLAYER -->
+        <div class="audio-box">
+            <div class="audio-info">
+                <span class="audio-artist">Parasite Nurse</span> &mdash; <span class="audio-title">Frameless, Unrequited</span>
+            </div>
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/jabielecka-png/flicker_audio/26dca3d6870e100d83d6dc9e3fc3f6bfde97359e/Parasite%20Nurse%20-%20Frameless%2C%20Unrequited%20%5BCD%20MASTER%5D%20(1).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        
+         <div class="audio-box">
+            <div class="audio-info">
+                <span class="audio-artist">Parasite Nurse</span> &mdash; <span class="audio-title">Frameless, Unrequited</span>
+            </div>
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/jabielecka-png/flicker_audio/26dca3d6870e100d83d6dc9e3fc3f6bfde97359e/Parasite%20Nurse%20-%20Frameless%2C%20Unrequited%20%5BCD%20MASTER%5D%20(1).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        
+         <div class="audio-box">
+            <div class="audio-info">
+                <span class="audio-artist">Parasite Nurse</span> &mdash; <span class="audio-title">Frameless, Unrequited</span>
+            </div>
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/jabielecka-png/flicker_audio/26dca3d6870e100d83d6dc9e3fc3f6bfde97359e/Parasite%20Nurse%20-%20Frameless%2C%20Unrequited%20%5BCD%20MASTER%5D%20(1).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        
+         <div class="audio-box">
+            <div class="audio-info">
+                <span class="audio-artist">Parasite Nurse</span> &mdash; <span class="audio-title">Frameless, Unrequited</span>
+            </div>
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/jabielecka-png/flicker_audio/26dca3d6870e100d83d6dc9e3fc3f6bfde97359e/Parasite%20Nurse%20-%20Frameless%2C%20Unrequited%20%5BCD%20MASTER%5D%20(1).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        
+         <div class="audio-box">
+            <div class="audio-info">
+                <span class="audio-artist">Parasite Nurse</span> &mdash; <span class="audio-title">Frameless, Unrequited</span>
+            </div>
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/jabielecka-png/flicker_audio/26dca3d6870e100d83d6dc9e3fc3f6bfde97359e/Parasite%20Nurse%20-%20Frameless%2C%20Unrequited%20%5BCD%20MASTER%5D%20(1).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <p style="font-size: 0.9rem;">Acknowledgements: xyz</p>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/TUTAJ_ID_FILMU" allowfullscreen></iframe>
+        </div>
+
+    </div>
+
+    <script>
+        const bgOverlay = document.getElementById('bgOverlay');
+
+        function triggerGlitch() {
+            bgOverlay.style.opacity = '0.85';
+
+            const sliceCount = Math.floor(Math.random() * 2) + 2; 
+            const slices = [];
+
+            for (let i = 0; i < sliceCount; i++) {
+                const slice = document.createElement('div');
+                slice.className = 'glitch-slice';
+                
+                const topPos = Math.random() * 85;
+                const height = Math.random() * 12 + 6; 
+                const offsetX = (Math.random() - 0.5) * 160; 
+                
+                slice.style.top = topPos + 'vh';
+                slice.style.height = height + 'vh';
+                slice.style.transform = `translateX(${offsetX}px)`;
+                
+                document.body.appendChild(slice);
+                slices.push(slice);
+            }
+
+            setTimeout(() => {
+                bgOverlay.style.opacity = '0.5';
+                slices.forEach(slice => slice.remove());
+            }, 150);
+        }
+
+        let isScrolling;
+        window.addEventListener('scroll', () => {
+            triggerGlitch();
+            clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {}, 100);
+        });
+    </script>
+
+</body>
+</html>
